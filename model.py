@@ -105,6 +105,22 @@ class MultiHeadAttentionBlock(nn.Module):
         if mask is not None:
             # Write a very low value (indicating -inf) to the positions where mask == 0
             attention_scores.masked_fill_(mask == 0, -1e9)
+
+        # sparse
+
+        # example
+        # tensor = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=torch.float32)
+        
+        # # Setting the threshold
+        # threshold = 4
+        
+        # # Applying the threshold and replacing values
+        # tensor[tensor <= threshold] = float('-inf')
+        
+        # print(tensor)
+
+
+        attention_scores = 
         attention_scores = attention_scores.softmax(dim=-1) # (batch, h, seq_len, seq_len) # Apply softmax
         if dropout is not None:
             attention_scores = dropout(attention_scores)
